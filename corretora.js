@@ -1,17 +1,82 @@
 const prompt = require('prompt-sync')();
-const coretoras = [];
+const db = [];
+let proxId = 1;
 
-const cadastroCorretora = () => {
+const model = (id = proxId++) => {
 
-    const nomeCorretora = prompt('Digite o nome da corretora: ');
+    const nome = prompt('Digite o nome da corretora: ');
 
-    if (nomeCorretora != '') {
-        coretoras.push(nomeCorretora);
-        console.log('Corretora cadastrada com sucesso!');
+    if (nome != '') {
+        return {
+            id,
+            nome
+        };
     }
     console.log('Dados inválidos!');
 };
 
+const store = () => {
+
+    const novo = model();
+
+    if (novo) {
+        db.push(novo);
+        console.log('Registro concluído com sucesso!');
+    }
+};
+
+const index = () => {
+
+    if (db.length == 0) {
+        console.log('Nenhum registro encontrado.');
+        return false;
+    }
+
+    db.forEach(el => console.log(el));
+    return true;
+};
+
+const show = id => db.find(el => el.id == id);
+
+const update = () => {
+
+    if (index()) {
+        const id = parseInt(prompt('Escolha pelo ID qual registro deseja atualizar: '));
+        const indice = db.findIndex(el => el.id == id);
+
+        if (indice != -1) {
+            const novo = model(id);
+            if (novo) {
+                db[indice] = novo;
+                console.log('Registro atualizado com sucesso!');
+            }
+        }
+
+    } else {
+        console.log('Registro não encontrado.');
+    }
+
+};
+
+const destroy = () => {
+
+    if (index()) {
+        const id = parseInt(prompt('Escolha pelo ID qual registro deseja remover: '));
+        const indice = db.findIndex(el => el.id == id);
+
+        if (indice != -1) {
+            db.splice(indice, 1);
+            console.log('Registro removido com sucesso!');
+        } else {
+            console.log('Registro não encontrado.');
+        }
+    }
+};
+
 module.exports = {
-    cadastroCorretora
+    store,
+    index,
+    show,
+    update,
+    destroy
 };

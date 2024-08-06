@@ -1,15 +1,89 @@
 const prompt = require('prompt-sync')();
-const corretores = [];
+const corretora = require('./corretora.js')
+const db = [];
+let proxId = 1;
 
-const cadastroCorretor = () => {
+const model = (id = proxId++) => {
 
-    const nomeCorretor = prompt('Digite o nome do corretor: ');
-    if (nomeCorretor != '') {
-        corretores.push(nomeCorretor);
-        console.log('Corretor cadastrado com sucesso!');
+    const nome = prompt('Digite o nome do corretor: ');
+
+    let idCorretora = 0
+
+    if (corretora.index()) {
+        idCorretora = parseInt(prompt('ID da corretora: '));
+    } else {
+        console.log('Cadastre uma corretora para poder realizar essa ação!');
+    }
+
+    if (nome != '' &&
+        corretora.show(idCorretora)) {
+        return {
+            id,
+            nome,
+            idCorretora
+        };
+    }
+    console.log('Dados inválidos!');
+};
+
+const store = () => {
+
+    const novo = model();
+
+    if (novo) {
+        db.push(novo);
+        console.log('Registro concluído com sucesso!');
+    }
+};
+
+const index = () => {
+
+    if (db.length == 0) {
+        console.log('Nenhum registro encontrado.');
+        return false;
+    }
+
+    db.forEach(el => console.log(el));
+    return true;
+};
+
+const show = id => db.find(el => el.id == id);
+
+const update = () => {
+
+    if (index()) {
+        const id = parseInt(prompt('Escolha pelo ID qual registro deseja atualizar: '));
+        const indice = db.findIndex(el => el.id == id);
+
+        if (indice != -1) {
+            const novo = model(id);
+            if (novo) {
+                db[indice] = novo;
+                console.log('Registro atualizado com sucesso!');
+            }
+        }
+    }
+};
+
+const destroy = () => {
+
+    if (index()) {
+        const id = parseInt(prompt('Escolha pelo ID qual registro deseja remover: '));
+        const indice = db.findIndex(el => el.id == id);
+
+        if (indice != -1) {
+            db.splice(indice, 1);
+            console.log('Registro removido com sucesso!');
+        } else {
+            console.log('Registro não encontrado.');
+        }
     }
 };
 
 module.exports = {
-    cadastroCorretor
+    store,
+    index,
+    show,
+    update,
+    destroy
 };

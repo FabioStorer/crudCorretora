@@ -50,10 +50,9 @@ const update = () => {
                 db[indice] = novo;
                 console.log('Registro atualizado com sucesso!');
             }
+        } else {
+            console.log('ID incorreto!');
         }
-
-    } else {
-        console.log('Registro não encontrado.');
     }
 
 };
@@ -68,7 +67,7 @@ const destroy = () => {
             db.splice(indice, 1);
             console.log('Registro removido com sucesso!');
         } else {
-            console.log('Registro não encontrado.');
+            console.log('ID incorreto!');
         }
     }
 };

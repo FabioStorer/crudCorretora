@@ -9,7 +9,7 @@ const model = (id = proxId++) => {
     const rua = prompt('Digite o nome da rua do imóvel: ');
     const bairro = prompt('Digite o nome do bairro do imóvel: ');
 
-    let idCorretora = 0
+    let idCorretora = 0;
 
     if (corretora.index()) {
         idCorretora = parseInt(prompt('ID da corretora: '));
@@ -23,7 +23,8 @@ const model = (id = proxId++) => {
             id,
             numero,
             rua,
-            bairro
+            bairro,
+            idCorretora
         };
     }
     console.log('Dados inválidos!');

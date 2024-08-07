@@ -17,7 +17,9 @@ const model = (id = proxId++) => {
         console.log('Cadastre uma corretora para poder realizar essa ação!');
     }
 
-    if (numero != '' &&
+    if (numero > 0 &&
+        rua != '' &&
+        bairro != '' &&
         corretora.show(idCorretora)) {
         return {
             id,
@@ -40,14 +42,20 @@ const store = () => {
     }
 };
 
-const index = () => {
+const index = (idCorretora) => {
 
     if (db.length == 0) {
         console.log('Nenhum registro encontrado.');
         return false;
     }
 
-    db.forEach(el => console.log(el));
+    db.forEach((el) => {
+        if (el.idCorretora == idCorretora || !idCorretora) {
+            console.log(el)
+
+        };
+    })
+    
     return true;
 };
 

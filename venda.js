@@ -16,20 +16,25 @@ const model = (id = proxId++) => {
     } else {
         console.log('Cadastre um corretor para poder realizar essa ação!');
     }
+    const corretorAux = corretor.show(idCorretor);
+
     if (cliente.index()) {
         idCliente = parseInt(prompt('ID do cliente: '));
     } else {
         console.log('Cadastre um cliente para poder realizar essa ação!');
     }
-    if (imovel.index()) {
+
+    if (corretorAux && imovel.index(corretorAux.idCorretora)) {
         idImovel = parseInt(prompt('ID do imóvel: '));
     } else {
         console.log('Cadastre um imóvel para poder realizar essa ação!');
     }
+    const imovelAux = imovel.show(idImovel);
 
-    if (corretor.show(idCorretor) &&
+    if (corretorAux &&
         cliente.show(idCliente) &&
-        imovel.show(idImovel)) {
+        imovelAux &&
+        corretorAux.idCorretor == imovelAux.idImovel) {
         return {
             idCorretor,
             idCliente,

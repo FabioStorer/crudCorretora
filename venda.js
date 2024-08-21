@@ -73,7 +73,7 @@ const update = () => {
         const id = parseInt(prompt('Escolha pelo ID qual registro deseja atualizar: '));
         const indice = db.findIndex(el => el.id == id);
 
-        if (indice != -1) {
+        if (indice != -1 && indice < db.length) {
             const novo = model(id);
             if (novo) {
                 db[indice] = novo;
